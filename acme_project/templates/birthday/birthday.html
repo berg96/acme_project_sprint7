@@ -2,9 +2,7 @@
 
 {% block content %}
   <form>
-    <table>
-      {{ form }}
-    </table>
+    {{ form.as_p }}
     <input type="submit" value="Submit">
   </form>
 {% endblock %}
