@@ -14,13 +14,15 @@
       </form>
     </div>
   </div>
-  {% with data=request.POST %}
+  {% with data=form.instance %}
     {% if form.is_valid %}
+      ID новой записи в БД: {{ data.id }}
+      <hr>
       <h2>Привет, {{ data.first_name }} {{ data.last_name }}</h2>
       {% if birthday_countdown == 0 %}
-        С днём рождения!
+        <p>С днём рождения!</p>
       {% else %}
-        Осталось дней до дня рождения: {{ birthday_countdown }}!
+        <p>Осталось дней до дня рождения: {{ birthday_countdown }}!</p>
       {% endif %}
     {% endif %}
   {% endwith %}
