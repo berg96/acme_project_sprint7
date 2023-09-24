@@ -4,11 +4,8 @@ from .forms import BirthdayForm
 
 
 def birthday(request):
-    if request.GET:
-        form = BirthdayForm(request.GET)
-        if form.is_valid():
-            pass
-    else:
-        form = BirthdayForm()
+    form = BirthdayForm(request.GET or None)
+    if form.is_valid():
+        pass
     context = {'form': form}
     return render(request, 'birthday/birthday.html', context)
