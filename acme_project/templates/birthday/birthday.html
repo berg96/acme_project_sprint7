@@ -1,9 +1,10 @@
 {% extends "base.html" %}
+{% load django_bootstrap5 %}
 
 {% block content %}
   <form>
-    {{ form.as_p }}
-    <input type="submit" value="Submit">
+    {% bootstrap_form form %}
+    {% bootstrap_button button_type="submit" content="Отправить" %}
   </form>
   {% with data=request.GET %}
     {% if form.is_valid %}
