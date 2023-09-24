@@ -15,9 +15,3 @@ def birthday(request):
         )
         context.update({'birthday_countdown': birthday_countdown})
     return render(request, 'birthday/birthday.html', context)
-
-
-def birthday_list(request):
-    birthdays = Birthday.objects.all().order_by('birthday')
-    context = {'birthdays': birthdays}
-    return render(request, 'birthday/birthday_list.html', context)
