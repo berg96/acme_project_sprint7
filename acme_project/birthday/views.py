@@ -8,6 +8,7 @@ def birthday(request):
     form = BirthdayForm(request.POST or None)
     context = {'form': form}
     if form.is_valid():
+        form.save()
         birthday_countdown = calculate_birthday_countdown(
             form.cleaned_data['birthday']
         )
