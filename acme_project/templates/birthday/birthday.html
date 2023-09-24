@@ -5,4 +5,7 @@
     {{ form.as_p }}
     <input type="submit" value="Submit">
   </form>
+  {% if request.GET %}
+    <h2>Привет, {{ request.GET.first_name }} {{ request.GET.last_name }}</h2>
+  {% endif %}
 {% endblock %}
