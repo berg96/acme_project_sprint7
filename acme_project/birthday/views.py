@@ -1,4 +1,6 @@
+from datetime import date
 from django.shortcuts import render
+from django.db.models import F
 
 from .forms import BirthdayForm
 from .models import Birthday
@@ -15,3 +17,12 @@ def birthday(request):
         )
         context.update({'birthday_countdown': birthday_countdown})
     return render(request, 'birthday/birthday.html', context)
+
+
+def birthday_list(request):
+    datediff = '(strftime("%j","birthday") - strftime("%j","now") + 365) % 365'
+    birthdays = Birthday.objects.extra(select={'datediff': datediff}).order_by(
+        'datediff'
+    )
+    context = {'birthdays': birthdays}
+    return render(request, 'birthday/birthday_list.html', context)
