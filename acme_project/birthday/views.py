@@ -1,6 +1,4 @@
-from datetime import date
 from django.shortcuts import render
-from django.db.models import F
 
 from .forms import BirthdayForm
 from .models import Birthday
