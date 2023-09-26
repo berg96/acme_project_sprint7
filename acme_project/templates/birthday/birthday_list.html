@@ -6,6 +6,9 @@
       <div>
         {{ birthday.first_name }} {{ birthday.last_name }} - {{ birthday.birthday }} ({{ birthday.datediff }})
       </div>
+      <div>
+        <a href="{% url 'birthday:edit' birthday.id %}">Изменить запись</a>
+      </div>
       {% if not forloop.last %}
         <hr>
       {% endif %}

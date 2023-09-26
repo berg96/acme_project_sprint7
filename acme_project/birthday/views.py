@@ -1,12 +1,16 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 
 from .forms import BirthdayForm
 from .models import Birthday
 from .utils import calculate_birthday_countdown
 
 
-def birthday(request):
-    form = BirthdayForm(request.POST or None)
+def birthday(request, pk=None):
+    if pk is not None:
+        instance = get_object_or_404(Birthday, pk=pk)
+    else:
+        instance = None
+    form = BirthdayForm(request.POST or None, instance=instance)
     context = {'form': form}
     if form.is_valid():
         form.save()
