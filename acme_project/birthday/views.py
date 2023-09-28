@@ -10,9 +10,12 @@ from .utils import calculate_birthday_countdown
 
 class BirthdayMixin:
     model = Birthday
+    success_url = reverse_lazy('birthday:list')
+
+
+class BirthdayFormMixin:
     form_class = BirthdayForm
     template_name = 'birthday/birthday.html'
-    success_url = reverse_lazy('birthday:list')
 
 
 class BirthdayListView(ListView):
@@ -21,11 +24,15 @@ class BirthdayListView(ListView):
     ordering = 'id'
 
 
-class BirthdayCreateView(CreateView, BirthdayMixin):
+class BirthdayCreateView(BirthdayMixin, BirthdayFormMixin, CreateView):
     pass
 
 
-class BirthdayUpdateView(UpdateView, BirthdayMixin):
+class BirthdayUpdateView(BirthdayMixin, BirthdayFormMixin, UpdateView):
+    pass
+
+
+class BirthdayDeleteView(BirthdayMixin, DeleteView):
     pass
 
 
