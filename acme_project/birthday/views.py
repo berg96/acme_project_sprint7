@@ -13,23 +13,18 @@ class BirthdayMixin:
     success_url = reverse_lazy('birthday:list')
 
 
-class BirthdayFormMixin:
-    form_class = BirthdayForm
-    template_name = 'birthday/birthday.html'
-
-
 class BirthdayListView(ListView):
     model = Birthday
     paginate_by = 10
     ordering = 'id'
 
 
-class BirthdayCreateView(BirthdayMixin, BirthdayFormMixin, CreateView):
-    pass
+class BirthdayCreateView(BirthdayMixin, CreateView):
+    form_class = BirthdayForm
 
 
-class BirthdayUpdateView(BirthdayMixin, BirthdayFormMixin, UpdateView):
-    pass
+class BirthdayUpdateView(BirthdayMixin, UpdateView):
+    form_class = BirthdayForm
 
 
 class BirthdayDeleteView(BirthdayMixin, DeleteView):
