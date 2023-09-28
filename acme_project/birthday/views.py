@@ -1,9 +1,16 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.core.paginator import Paginator
+from django.views.generic import ListView
 
 from .forms import BirthdayForm
 from .models import Birthday
 from .utils import calculate_birthday_countdown
+
+
+class BirthdayListView(ListView):
+    model = Birthday
+    paginate_by = 10
+    ordering = 'id'
 
 
 def birthday(request, pk=None):
