@@ -1,8 +1,15 @@
 from django.urls import reverse_lazy
-from django.views.generic import ListView, CreateView, UpdateView, DeleteView
+from django.views.generic import (
+    ListView,
+    CreateView,
+    UpdateView,
+    DeleteView,
+    DetailView,
+)
 
 from .forms import BirthdayForm
 from .models import Birthday
+from .utils import calculate_birthday_countdown
 
 
 DATEDIFF = '(strftime("%j","birthday") - strftime("%j","now") + 365) % 365'
@@ -32,3 +39,14 @@ class BirthdayUpdateView(BirthdayMixin, UpdateView):
 
 class BirthdayDeleteView(BirthdayMixin, DeleteView):
     pass
+
+
+class BirthdayDetailView(DetailView):
+    model = Birthday
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['birthday_countdown'] = calculate_birthday_countdown(
+            self.object.birthday
+        )
+        return context
