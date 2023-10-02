@@ -1,3 +1,4 @@
+from django.shortcuts import get_object_or_404
 from django.urls import reverse_lazy
 from django.views.generic import (
     ListView,
@@ -38,10 +39,24 @@ class BirthdayUpdateView(LoginRequiredMixin, UpdateView):
     model = Birthday
     form_class = BirthdayForm
 
+    def dispatch(self, request, *args, **kwargs):
+        # Получаем объект по первичному ключу и автору или вызываем 404 ошибку.
+        get_object_or_404(Birthday, pk=kwargs['pk'], author=request.user)
+        # Если объект был найден, то вызываем родительский метод,
+        # чтобы работа CBV продолжилась.
+        return super().dispatch(request, *args, **kwargs)
+
 
 class BirthdayDeleteView(LoginRequiredMixin, DeleteView):
     model = Birthday
     success_url = reverse_lazy('birthday:list')
+
+    def dispatch(self, request, *args, **kwargs):
+        # Получаем объект по первичному ключу и автору или вызываем 404 ошибку.
+        get_object_or_404(Birthday, pk=kwargs['pk'], author=request.user)
+        # Если объект был найден, то вызываем родительский метод,
+        # чтобы работа CBV продолжилась.
+        return super().dispatch(request, *args, **kwargs)
 
 
 class BirthdayDetailView(DetailView):
