@@ -6,6 +6,7 @@ from django.views.generic import (
     DeleteView,
     DetailView,
 )
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 from .forms import BirthdayForm
 from .models import Birthday
@@ -24,17 +25,17 @@ class BirthdayListView(ListView):
         return qs.extra(select={'datediff': DATEDIFF}).order_by('datediff')
 
 
-class BirthdayCreateView(CreateView):
+class BirthdayCreateView(LoginRequiredMixin, CreateView):
     model = Birthday
     form_class = BirthdayForm
 
 
-class BirthdayUpdateView(UpdateView):
+class BirthdayUpdateView(LoginRequiredMixin, UpdateView):
     model = Birthday
     form_class = BirthdayForm
 
 
-class BirthdayDeleteView(DeleteView):
+class BirthdayDeleteView(LoginRequiredMixin, DeleteView):
     model = Birthday
     success_url = reverse_lazy('birthday:list')
 
