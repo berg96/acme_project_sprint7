@@ -29,6 +29,10 @@ class BirthdayCreateView(LoginRequiredMixin, CreateView):
     model = Birthday
     form_class = BirthdayForm
 
+    def form_valid(self, form):
+        form.instance.author = self.request.user
+        return super().form_valid(form)
+
 
 class BirthdayUpdateView(LoginRequiredMixin, UpdateView):
     model = Birthday
