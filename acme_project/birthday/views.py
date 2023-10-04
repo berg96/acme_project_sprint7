@@ -23,10 +23,12 @@ DATEDIFF = '(strftime("%j","birthday") - strftime("%j","now") + 365) % 365'
 class BirthdayListView(ListView):
     model = Birthday
     paginate_by = 10
-
-    def get_queryset(self):
-        qs = super().get_queryset()
-        return qs.extra(select={'datediff': DATEDIFF}).order_by('datediff')
+    queryset = (
+        Birthday.objects.prefetch_related('tags')
+        .select_related('author')
+        .extra(select={'datediff': DATEDIFF})
+        .order_by('datediff')
+    )
 
 
 class BirthdayCreateView(LoginRequiredMixin, CreateView):
